@@ -3,14 +3,18 @@ from django.contrib import admin
 from django.urls import path
 from genres.views import *
 from actors.views import *
-
+from movies.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('genres/', GenreCreateListView.as_view(), name='genre-create-list'),
-    path('genres/<int:pk>/', GenreListUpdateDeleteView.as_view(), name='genre-detail'),
+    path('genres/<int:pk>/', GenreListUpdateDeleteView.as_view(), name='genre-detail-update-delete'),
 
     #ACTORS
     path('actors/', ActorCreateListView.as_view(), name='actor-create-list'),
-    path('actors/<int:pk>/', ActorRetrieveUpdateDestroyView.as_view(), name='actor-list-update-delete'),
+    path('actors/<int:pk>/', ActorRetrieveUpdateDestroyView.as_view(), name='actor-detail-update-delete'),
+
+    #MOVIES
+    path('movies/', MovieCreateList.as_view(), name='movie-create-list'),
+    path('movies/<int:pk>/', MovieListUpdateDelete.as_view(), name='movie-detail-update-delete'),
 ]
