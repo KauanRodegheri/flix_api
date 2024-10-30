@@ -30,7 +30,7 @@ class GenreCreateListView(generics.ListCreateAPIView):
 #            status=201,
 #        )
 
-class GenreListUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+class GenreRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     

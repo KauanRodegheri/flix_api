@@ -2,10 +2,10 @@ import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from actors.models import Actor
-from actors.serializers import ActorSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
+from actors.models import Actor
+from actors.serializers import ActorSerializer
 
 class ActorCreateListView(ListCreateAPIView):
     queryset = Actor.objects.all()

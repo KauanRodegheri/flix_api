@@ -5,10 +5,10 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from movies.models import Movie
 from movies.serializers import MovieSerializer
 
-class MovieCreateList(ListCreateAPIView):
+class MovieCreateListView(ListCreateAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
 
-class MovieListUpdateDelete(RetrieveUpdateDestroyAPIView):
+class MovieRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
