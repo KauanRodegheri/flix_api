@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
-from genres.models import Genre
+from .models import Genre
 from genres.serializers import GenreSerializer
 
 
