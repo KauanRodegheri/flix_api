@@ -3,16 +3,16 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from movies.models import Movie
-from movies.serializers import MovieSerializer
+from movies.serializers import MovieModelSerializer
 from django.http import JsonResponse
 
 class MovieCreateListView(ListCreateAPIView):
     queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
+    serializer_class = MovieModelSerializer
 
 class MovieRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
+    serializer_class = MovieModelSerializer
     
     def delete(self, request, pk,*args, **kwargs):
         movies = Movie.objects.all()
