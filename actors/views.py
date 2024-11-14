@@ -2,15 +2,29 @@ import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from actors.models import Actor
 from actors.serializers import ActorSerializer
 
 class ActorCreateListView(ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
+class ActorRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    queryset = Actor.objects.all()
+    serializer_class = ActorSerializer
+
+
+    
+    def delete(self, request, *args, **kwargs):
+        super().delete(request, *args, **kwargs)
+        return JsonResponse({'message': f"actor delete success"})
+    
+'''USANDO FUNCTION BASED VIEWS ( GET E POST )'''    
 #@csrf_exempt
 #def actor_create_list_view(request):
 #
@@ -47,19 +61,7 @@ class ActorCreateListView(ListCreateAPIView):
 #            status=201 
 #        )
 
-
-class ActorRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Actor.objects.all()
-    serializer_class = ActorSerializer
-
-
-    
-    def delete(self, request, *args, **kwargs):
-        super().delete(request, *args, **kwargs)
-        return JsonResponse({'message': f"actor delete success"})
-    
-    
-
+'''USANDO FUNCTION BASED VIEWS (GET, PUT E DELETE)'''
 #@csrf_exempt   
 #def actor_retrieve_update_detroy_view(request, pk):
 #    actor = get_object_or_404(Actor, pk=pk)
