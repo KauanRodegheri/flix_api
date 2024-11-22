@@ -3,13 +3,13 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from .models import Genre
 from genres.serializers import GenreSerializer
-
+from .permissions import GenrePermissionClass
 
 class GenreCreateListView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticated, GenrePermissionClass,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
@@ -34,11 +34,17 @@ class GenreCreateListView(generics.ListCreateAPIView):
 #        )
 
 class GenreRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticated, GenrePermissionClass,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
-    
+    def delete(self, request, pk):
+        obj = get_object_or_404(Genre, id=pk)
+        super().delete(request, pk)
+        return JsonResponse(
+            {'message': f'{obj.name} excluido com sucesso'}
+        )
+
 
 #@csrf_exempt
 #def genre_detail_view(request, pk):

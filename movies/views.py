@@ -2,18 +2,18 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from movies.models import Movie
 from movies.serializers import MovieModelSerializer
 from django.http import JsonResponse
 
 class MovieCreateListView(ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Movie.objects.all()
     serializer_class = MovieModelSerializer
 
 class MovieRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Movie.objects.all()
     serializer_class = MovieModelSerializer
     
