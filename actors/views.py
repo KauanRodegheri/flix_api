@@ -7,14 +7,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from actors.models import Actor
 from actors.serializers import ActorSerializer
+from app.permissions import GlobalDefaultPermission
 
 class ActorCreateListView(ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
 class ActorRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 

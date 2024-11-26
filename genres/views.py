@@ -6,10 +6,10 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import Genre
 from genres.serializers import GenreSerializer
-from .permissions import GenrePermissionClass
+from app.permissions import GlobalDefaultPermission
 
 class GenreCreateListView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated, GenrePermissionClass,)
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
@@ -34,7 +34,7 @@ class GenreCreateListView(generics.ListCreateAPIView):
 #        )
 
 class GenreRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated, GenrePermissionClass,)
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
