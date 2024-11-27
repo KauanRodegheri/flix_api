@@ -3,6 +3,7 @@ from django.db import models
 NATIONALITY_CHOICES = (
     ('USA', 'Estados Unidos'),
     ('BRAZIL', 'Brasil'),
+    ('CHINA', "China")
 )
 
 class Actor(models.Model):
