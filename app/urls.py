@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.contrib import admin
 from django.urls import path, include
 
@@ -6,18 +5,14 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    #AUTHENTICATION
+    # AUTHENTICATION
     path('api/v1/', include('authentication.urls')),
-    
-    #GENRE
+    # GENRE
     path('api/v1/', include('genres.urls')),
-    #ACTORS
+    # ACTORS
     path('api/v1/', include('actors.urls')),
-
-    #MOVIES
+    # MOVIES
     path('api/v1/', include('movies.urls')),
-
-    #REVIEWS
+    # REVIEWS
     path('api/v1/', include('reviews.urls')),
-
 ]
