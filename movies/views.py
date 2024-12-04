@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from app.permissions import GlobalDefaultPermission
 from django.http import JsonResponse
 from movies.models import Movie
-from movies.serializers import MovieModelSerializer, MovieStatsSerializer
+from movies.serializers import MovieModelSerializer, MovieStatsSerializer, MovieListDetailSerializer
 from reviews.models import Review
 from actors.models import Actor
 from django.db.models import Count, Avg
@@ -13,13 +13,21 @@ from django.db.models import Count, Avg
 class MovieCreateListView(ListCreateAPIView):
     permission_classes = (IsAuthenticated, GlobalDefaultPermission)
     queryset = Movie.objects.all()
-    serializer_class = MovieModelSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return MovieListDetailSerializer
+        return MovieModelSerializer
 
 
 class MovieRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, GlobalDefaultPermission)
     queryset = Movie.objects.all()
-    serializer_class = MovieModelSerializer
+    
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return MovieListDetailSerializer
+        return MovieModelSerializer
 
     def delete(self, request, pk, *args, **kwargs):
         movies = Movie.objects.all()
