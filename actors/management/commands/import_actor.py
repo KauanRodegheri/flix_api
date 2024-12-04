@@ -1,7 +1,7 @@
-from django.core.management.base import BaseCommand, CommandParser
+from django.core.management.base import BaseCommand
 import csv
 from actors.models import Actor
-
+from datetime import datetime
 
 class Command(BaseCommand):
 
@@ -17,16 +17,22 @@ class Command(BaseCommand):
 
         with open(file_name, 'r', encoding='utf-8') as file:
             csv_reader = csv.DictReader(file)
+            actor = Actor.objects.all()
+            list_actors_repeat = []
             for row in csv_reader:
-                actor = Actor.objects.all()
                 try:
                     if actor.filter(name=row['name']).exists():
-                        print(f'já existe esse ator {row['name']} no banco de dados')
-                        break
-                    actor.create(
-                        name=row['name'],
-                        birthday=row['birthday'],
-                        nationality=row['nationality']
-                    )
-                except:
-                    raise 'houve um erro no salvamento'
+                        list_actors_repeat.append(row['name'])
+                    else:
+                        actor.create(
+                            name=row['name'],
+                            birthday=datetime.strptime(row['birthday'], '%Y-%m-%d').date(),
+                            nationality=row['nationality']
+                        )
+                        self.stdout.write(self.style.SUCCESS(f'ator {row['name']} cadastrado'))
+                except Exception as error:
+                    print(f'houve um erro no salvamento {error}')
+        if list_actors_repeat:
+            self.stdout.write(self.style.NOTICE(f'actors exists in database: {list_actors_repeat}'))
+        else:
+            self.stdout.write(self.style.SUCCESS('Todos atores cadastrados com sucesso'))
