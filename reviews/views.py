@@ -3,19 +3,27 @@ from rest_framework.permissions import IsAuthenticated
 from app.permissions import GlobalDefaultPermission
 from django.http import JsonResponse
 from reviews.models import Review
-from reviews.serializer import ReviewSerializer
+from reviews.serializer import ReviewSerializer, ReviewListDetailSerializer
 
 
 class ReviewCreateListView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, GlobalDefaultPermission)
     queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ReviewListDetailSerializer
+        return ReviewSerializer
 
 
 class ReviewRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, GlobalDefaultPermission)
-    queryset = Review
-    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ReviewListDetailSerializer
+        return ReviewSerializer
 
     def delete(self, request, pk, *args, **kwargs):
         try:
