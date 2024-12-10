@@ -40,7 +40,7 @@ class Command(BaseCommand):
                                         continue
                         else:
                             self.create_actor(actor, row['name'], row['birthday'], row['nationality'])
-                            self.stdout.write(self.style.SUCCESS(f'ator {row['name']} cadastrado'))
+                            self.stdout.write(self.style.SUCCESS(f"ator {row['name']} cadastrado"))
                     except Exception as error:
                         print(f'houve um erro no salvamento {error}')
         if list_actors_repeat:
