@@ -28,7 +28,7 @@ class Command(BaseCommand):
                     try:
                         if actor.filter(name=row['name'], birthday=row['birthday']).exists():
                             while True:
-                                opc = input(f'o ator {row['name']} ja existe, deseja inserir mesmo assim?').lower()
+                                opc = input(f"o ator {row['name']} ja existe, deseja inserir mesmo assim?").lower()
                                 match opc:
                                     case "n":
                                         list_actors_repeat.append(row['name'])
